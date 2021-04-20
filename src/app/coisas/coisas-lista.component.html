@@ -1,0 +1,46 @@
+<div class="card">
+    <div class="card-header">Lista de Coisas</div>
+
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-md-2">Filtrar por:</div>
+            <div class="col-md-4">
+                <input type="text" [(ngModel)]='filtroPesquisa'/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 my-1">
+                <h4>Filtrado por: {{filtroPesquisa}}</h4>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table" *ngIf="coisas.length">
+                <thead>
+                    <tr>
+                        <th><button (click)='mostrarImagem()' class="btn btn-secondary">{{imagemVisivel ? 'Ocultar' : 'Mostrar'}} Imagem</button></th>
+                        <th>Coisa</th>
+                        <th>Quantidade</th>
+                        <th>Preço</th>
+                        <th>Nível de querer</th>
+                        <th>Data de adição na lista</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let coisa of coisasFiltradas">
+                    <tr>
+                        <td><img *ngIf='imagemVisivel' [src]='coisa.imageUrl' [title]='coisa.nome' [style.width.px]='imageWidth' [style.margin.px]='imageMargin'></td>
+                        <td><a [routerLink]="['/coisas', coisa.id]">{{coisa.nome}}</a></td>
+                        <td>{{coisa.quantidade}}</td>
+                        <td>{{coisa.preco | currency:'BRL':'symbol':'1.2-2':'pt'}}</td>
+                        <td><cpc-estrelas-classificacao [classificacao]='coisa.nivelQuerer' (notify)='onNotify($event)'></cpc-estrelas-classificacao></td>
+                        <td>{{coisa.dataAdicionado | date:'shortDate':'':'pt'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
